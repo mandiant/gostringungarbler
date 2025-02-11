@@ -71,30 +71,30 @@ For the details of these obfuscations, see the [string obfuscation documentation
 
 ### Deobfuscation
 
-The program first resolves all obfuscated strings by hunting down decoding subroutines through regex and emulating them through **unicorn** emulator. To deobfuscate, the program manually patches each decoding subroutine with the following template.
+The program first resolves all obfuscated strings by hunting down decrypting subroutines through regex and emulating them through **unicorn** emulator. To deobfuscate, the program manually patches each decrypting subroutine with the following stub.
 
 ``` asm
 xor     eax, eax
-lea     rbx, [rip + 0xb]
+lea     rbx, [RIP + 0xb]
 mov     ecx, <decrypted string length>
 call    runtime_slicebytetostring
 ret
 <decrypted string>
 ```
 
-In the template above, we simply set up the arguments for ```runtime_slicebytetostring``` and call it. The register ```ebx``` contains the pointer to the decrypted string, and the register ```ecx``` contains the string's length.
+In the stub above, we simply set up the arguments for ```runtime_slicebytetostring``` and call it. The register ```rbx``` contains the pointer to the decrypted string, and the register ```rcx``` contains the string's length.
 
 As the **garble** obfuscator pushes the obfuscated bytes onto the stack in the decoding subroutine instead of retrieving them from another section in the binary, we know for sure that there will always be enough space in the subroutine body to contain the decrypted string content. 
 
-With this, the **GoStringUngarbler** directly writes the decrypted string immediately following the subroutine being patched in.
+With this, the **GoStringUngarbler** directly writes the decrypted string immediately following the stub subroutine being patched in.
 
 ![patch subroutine](/image/patched.png)
 
-Below is the decompiled code of the patched function.
+Below is the decompiled code of the patched subroutine.
 
 ![patch decompiled](/image/patched_decompiled.png)
 
-This should significantly speed up the analysis process for malware analysts when encountering samples obfuscated with garble.
+This should significantly speed up the analysis process for malware analysts when encountering samples obfuscated with garble's literal transformations.
 
 ## TODO
 
