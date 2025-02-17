@@ -774,7 +774,7 @@ V1.21 -> 1.23
 # .text:49142A 5D                                      pop     rbp
 # .text:49142B C3                                      retn
 
-V21_V23_SPLIT_EPILOGUE_PATTERN = rb'\x31\xC0\x48\x89[\S\s]\x48\x89[\S\s][\x66\x90]*[\x0F\x1F\x40\x00]*\xE8[\S\s]{4}\x48[\x81\x83][\S\s]{2,5}\x5D\xC3'
+V21_V23_SPLIT_EPILOGUE_PATTERN = rb'\x31\xC0\x48\x89[\S\s]\x48\x89[\S\s][\x66\x90]*[\x0F\x1F\x40\x00\x44]*\xE8[\S\s]{4}\x48[\x81\x83][\S\s]{2,5}\x5D\xC3'
 ```
 
 Old:
@@ -787,7 +787,7 @@ Old:
 # 48 81 C4 88 00 00 00    add     rsp, 88h
 # C3                      retn
 
-OLD_SPLIT_EPILOGUE_PATTERN = rb'\x31\xC0\x48\x89[\S\s]\x48\x89[\S\s][\x66\x90]*[\x0F\x1F\x40\x00]*\xE8[\S\s]{4}\x48\x8B[\S\s]{3,6}\x48[\x81\x83][\S\s]{2,5}\xC3'
+OLD_SPLIT_EPILOGUE_PATTERN = rb'\x31\xC0\x48\x89[\S\s]\x48\x89[\S\s][\x66\x90]*[\x0F\x1F\x40\x00\x44]*\xE8[\S\s]{4}\x48\x8B[\S\s]{3,6}\x48[\x81\x83][\S\s]{2,5}\xC3'
 ```
 
 ## Seed Epilogue
@@ -803,7 +803,7 @@ V1.21 -> 1.23
 # .text:495A69 5D                                      pop     rbp
 # .text:495A6A C3                                      retn
 
-V21_V23_SEED_EPILOGUE_PATTERN = rb'\x48\x8b[\S\s]\x48\x8b[\S\s]{2}\x31\xC0[\x66\x90]*[\x0F\x1F\x40\x00]*\xE8[\S\s]{4}\x48[\x81\x83][\S\s]{2,5}\x5D\xC3'
+V21_V23_SEED_EPILOGUE_PATTERN = rb'\x48\x8b[\S\s]\x48\x8b[\S\s]{2}\x31\xC0[\x66\x90]*[\x0F\x1F\x40\x00\x44]*\xE8[\S\s]{4}\x48[\x81\x83][\S\s]{2,5}\x5D\xC3'
 ```
 
 Old:
@@ -816,7 +816,7 @@ Old:
 # 48 83 C4 38             add     rsp, 38h
 # C3                      retn
 
-OLD_SEED_EPILOGUE_PATTERN = rb'\x48\x8b[\S\s]\x48\x8b[\S\s]{2}\x31\xC0[\x66\x90]*[\x0F\x1F\x40\x00]*\xE8[\S\s]{4}\x48\x8b[\S\s]{3,6}\x48[\x81\x83][\S\s]{2,5}\xC3'
+OLD_SEED_EPILOGUE_PATTERN = rb'\x48\x8b[\S\s]\x48\x8b[\S\s]{2}\x31\xC0[\x66\x90]*[\x0F\x1F\x40\x00\x44]*\xE8[\S\s]{4}\x48\x8b[\S\s]{3,6}\x48[\x81\x83][\S\s]{2,5}\xC3'
 ```
 
 # String Decrypting Subroutine's Regex Patterns (x86)
